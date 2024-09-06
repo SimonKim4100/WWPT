@@ -21,6 +21,17 @@ and the command will start installing a lot of files. Be noted that this may tak
 6. All done!
 
 ## If you're lazy...
-This python file has to be manually "run" for it to work. 
+This python file has to be manually "run" for it to work. But having to run this python file with the launcher can be tedious, so I made an automated batch maker. What this does, is it will ask for the directory of your game's launcher, and the wwpt.py file's directory. Entering them will make a "launch_game_and_wwpt.bat" which runs both the launcher and the python script at the same time.
+Be wary that you must enter the FILE'S DIRECTORY, not the folders directory. For example, the directory to my python file would be:
+`C:\\Users\\username\\Desktop\\GIT\\WWPT\\wwpt.py`
+and NOT
+`C:\\Users\\username\\Desktop\\GIT\\WWPT'
 
 ## Application Walkthrough
+1. When the python script is launched, it will ask for your username. This one, I will be distributing one for each one of you that contacts me.
+2. When the username is entered, the program will automatically be minimized into the Windows tray.
+3. In-game, take a screenshot of your remaining plates with **Win+Shift+S**.
+4. **Only screenshot the part where the plates are shown.**
+5. Click on the tray --> right click on WWPT --> go to settings --> press "generate"
+6. This will automaticall save your plates to the database.
+7. Return to your mobile, and refresh! All done!

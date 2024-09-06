@@ -51,8 +51,13 @@ def ask_for_username():
     while True:
         root = Tk()
         root.withdraw()  # Hide the main window
-        username = simpledialog.askstring("Input", "Enter your username:", parent=root)
+        username = simpledialog.askstring("Input", "Enter your username (or click Cancel to exit):", parent=root)
         root.destroy()
+
+        if username is None:  # If the user clicks "Cancel" or closes the window
+            messagebox.showinfo("Exit", "No username provided. Exiting the application.")
+            quit_program(None, None)
+            return None  # Exit the loop and function
 
         if username:
             # Check if the username exists in Firestore
@@ -69,6 +74,7 @@ def ask_for_username():
                 return username
         else:
             messagebox.showerror("Error", "Username cannot be empty.")
+
 
 def edit_username():
     """Function to edit the username."""

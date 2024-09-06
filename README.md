@@ -28,7 +28,7 @@ and NOT<br>
 `C:\\Users\\username\\Desktop\\GIT\\WWPT`<br>
 
 ## Application Walkthrough
-1. When the python script is launched, it will ask for your username. This one, I will be distributing one for each one of you that contacts me.
+1. When the python script is launched, it will ask for your username. This one, I will be distributing one for each one of you that contacts me. It won't ask anymore if you've properly entered your username the first time.
 2. When the username is entered, the program will automatically be minimized into the Windows tray.
 3. In-game, take a screenshot of your remaining plates with **Win+Shift+S**.
 4. **Only screenshot the part where the plates are shown.**

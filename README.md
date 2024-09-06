@@ -21,8 +21,8 @@ and the command will start installing a lot of files. Be noted that this may tak
 6. All done!
 
 ## If you're lazy...
-This python file has to be manually "run" for it to work. But having to run this python file with the launcher can be tedious, so I made an automated batch maker. What this does, is it will ask for the directory of your game's launcher, and the wwpt.py file's directory. Entering them will make a "launch_game_and_wwpt.bat" which runs both the launcher and the python script at the same time.
-Be wary that you must enter the FILE'S DIRECTORY, not the folders directory. For example, the directory to my python file would be: <br>
+This python file has to be manually "run" for it to work. But having to run this python file with the launcher can be tedious, so I made an automated batch maker. What this does, is it will ask for the directory of your game's launcher, and the wwpt.py file's directory. Entering them will make a "launch_game_and_wwpt.bat" which runs both the launcher and the python script at the same time.<br>
+Be wary that you must enter the **FILE'S DIRECTORY**, not the folder's directory. For example, the directory to my python file would be: <br>
 `C:\\Users\\username\\Desktop\\GIT\\WWPT\\wwpt.py`<br>
 and NOT<br>
 `C:\\Users\\username\\Desktop\\GIT\\WWPT`<br>

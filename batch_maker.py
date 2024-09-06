@@ -4,11 +4,11 @@ def create_batch(game_dir, python_script_dir):
     # Batch file content
     batch_content = f'''@echo off
 start "" "{game_dir}"
-start "" "python" "{python_script_dir}"
+start "" "{python_script_dir}"
 '''
 
     # Path to save the batch file
-    batch_file_path = os.path.join(os.getcwd(), 'launch_game_and_wwpt.bat')
+    batch_file_path = os.path.join(os.getcwd(), 'launch_game_and_RUN.bat')
 
     # Write the batch content to the file
     with open(batch_file_path, 'w') as batch_file:
@@ -28,7 +28,7 @@ def main():
         game_dir = input("Enter the full path to the game executable: ").strip()
 
     # Ask for the wwpt.py directory
-    python_script_dir = input("Enter the full path to wwpt.py (e.g., C:\\Users\\username\\Desktop\\GIT\\WWPT\\wwpt.py): ").strip()
+    python_script_dir = input("Enter the full path to RUN.bat (e.g., C:\\Users\\username\\Desktop\\GIT\\WWPT\\RUN.bat): ").strip()
     
     # Validate if the input is correct
     while not os.path.isfile(python_script_dir):

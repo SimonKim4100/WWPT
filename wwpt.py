@@ -1,7 +1,6 @@
 import os
 import sys
-import firebase_admin
-from firebase_admin import credentials, firestore
+import requests
 import datetime
 from paddleocr import PaddleOCR
 import cv2
@@ -11,23 +10,14 @@ from PIL import Image, ImageGrab
 import tkinter as tk
 from tkinter import simpledialog, Tk, Button, messagebox
 import threading
+import json
 
-# Determine the path to the service account JSON file
-if getattr(sys, 'frozen', False):
-    # If the application is run as a bundled executable, the JSON file will be in the temp directory
-    base_path = sys._MEIPASS
-else:
-    # If run in a normal Python environment, assume the JSON file is in the current directory
-    base_path = os.path.abspath(".")
-
-json_path = os.path.join(base_path, "wwpt-52e3c-firebase-adminsdk-t78mc-622d420109.json")
-
-# Initialize Firebase Admin SDK with the service account JSON file
-cred = credentials.Certificate(json_path)
-firebase_admin.initialize_app(cred)
-
-# Initialize Firestore DB
-db = firestore.client()
+# Firebase Config (Replace with your own Firebase config)
+firebase_config = {
+    "apiKey": "AIzaSyCE_QYQA4JzcJEpVLo01lhFYbyLQZlPfHs",
+    "projectId": "wwpt-52e3c",
+    "databaseURL": f"https://firestore.googleapis.com/v1/projects/wwpt-52e3c/databases/(default)/documents"
+}
 
 # Initialize the OCR model
 ocr = PaddleOCR(use_angle_cls=True, lang='en')  # 'lang' can be changed if needed
@@ -61,19 +51,30 @@ def ask_for_username():
 
         if username:
             # Check if the username exists in Firestore
-            user_ref = db.collection(username)  # Reference to the user's collection
-            docs = user_ref.stream()
-
-            if not list(docs):  # If no documents are found, the collection doesn't exist
-                messagebox.showerror("Error", "Username doesn't exist.")
-                continue  # Prompt for the username again
-            else:
+            if check_username_exists(username):
                 # Username exists, save it locally
                 with open(username_file_path, 'w') as f:
                     f.write(username)
                 return username
+            else:
+                messagebox.showerror("Error", "Username doesn't exist.")
         else:
             messagebox.showerror("Error", "Username cannot be empty.")
+
+def check_username_exists(username):
+    """Check if a username collection exists in Firestore via REST API."""
+    url = f"{firebase_config['databaseURL']}/{username}?key={firebase_config['apiKey']}"
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        # Check if the response contains any documents
+        documents = response.json().get('documents')
+        if documents:  # If documents exist, the collection exists
+            return True
+        else:
+            return False
+    else:
+        return False
 
 
 def edit_username():
@@ -81,10 +82,18 @@ def edit_username():
     root = Tk()
     root.withdraw()  # Hide the main window
     username = simpledialog.askstring("Input", "Enter your new username:", parent=root)
-    if username:
-        with open(username_file_path, 'w') as f:
-            f.write(username)
     root.destroy()
+
+    if username:
+        # Check if the username exists in Firestore
+        if check_username_exists(username):
+            # Username exists, save it locally
+            with open(username_file_path, 'w') as f:
+                f.write(username)
+        else:
+            messagebox.showerror("Error", "Username doesn't exist.")
+    else:
+        messagebox.showerror("Error", "Username cannot be empty.")
 
 def quit_program(icon, item):
     """Function to quit the application."""
@@ -116,26 +125,35 @@ def run_ocr():
                     # Get the username
                     username = get_username()
                     if username:
-                        # Check if the username collection exists in Firestore
-                        user_ref = db.collection(username)
-                        docs = user_ref.limit(1).get()  # Try to get at least one document from the collection
-
-                        if not docs:
-                            messagebox.showerror("Error", f"Username '{username}' does not exist in Firestore.")
-                        else:
-                            # If the username exists, save data
-                            doc_ref = db.collection(username).document("save")
-                            current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                            doc_ref.set({
-                                "plate_number": detected_text,
-                                "timestamp": current_time
-                            })
-                            print(f"Data saved to Firestore under '{username}' collection with document ID 'save'.")
+                        # Save data to Firestore using REST API
+                        save_to_firestore(username, detected_text)
                 else:
                     messagebox.showerror("Error", "No valid 'plates' count found in the expected format.")
             else:
                 messagebox.showerror("Error", "No text detected.")
 
+def save_to_firestore(username, detected_text):
+    """Function to save OCR results to Firestore using REST API."""
+    current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    url = f"{firebase_config['databaseURL']}/{username}/save?key={firebase_config['apiKey']}"
+
+    data = {
+        "fields": {
+            "plate_number": {"stringValue": detected_text},
+            "timestamp": {"stringValue": current_time}
+        }
+    }
+
+    headers = {
+        "Content-Type": "application/json"
+    }
+
+    response = requests.patch(url, headers=headers, data=json.dumps(data))
+
+    if response.status_code == 200:
+        print(f"Data saved to Firestore under '{username}' collection with document ID 'save'.")
+    else:
+        messagebox.showerror("Error", f"Failed to save data to Firestore: {response.content}")
 
 def save_clipboard_image():
     """Function to save the current clipboard image as wwpt.png."""
@@ -165,7 +183,6 @@ def show_settings_menu():
     generate_button.pack(pady=10)
 
     settings_window.mainloop()
-
 
 def create_tray_icon():
     """Function to create the system tray icon."""

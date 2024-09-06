@@ -35,3 +35,7 @@ and NOT
 5. Click on the tray --> right click on WWPT --> go to settings --> press "generate"
 6. This will automaticall save your plates to the database.
 7. Return to your mobile, and refresh! All done!
+
+## APK file
+https://drive.google.com/file/d/1K3sYktJogFG83XHWkSDR5ucGPRG4nT1F/view?usp=sharing
+Don't worry, it's hand made and safe XD

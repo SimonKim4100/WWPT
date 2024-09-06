@@ -7,6 +7,10 @@ While I tried my best to make this program user-friendly, there were many limita
 2. The database uses pseudo-authentication process, so please don't try to break through :)
 3. **You do NOT need to press any of the Python scripts**
 
+## Installation
+Download the `zip` files with versions, on the very right side of this Github screen.<br>
+Unzip it to a safe location.
+
 ## Walkthrough
 1. Launch `RUN.bat`. A window will ask for your username. This one, I will be distributing one for each one of you that contacts me. It won't ask anymore if you've properly entered your username the first time.
 2. When the username is entered, the program will automatically be minimized into the Windows tray.

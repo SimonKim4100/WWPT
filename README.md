@@ -27,6 +27,7 @@ Be wary that you must enter the **FILE'S DIRECTORY**, not the folder's directory
 `C:\\Users\\username\\Desktop\\GIT\\WWPT\\RUN.bat`<br>
 and NOT<br>
 `C:\\Users\\username\\Desktop\\GIT\\WWPT`<br>
+Ignore the double slash, feel free to use single.
 
 ## APK file
 https://drive.google.com/file/d/1K3sYktJogFG83XHWkSDR5ucGPRG4nT1F/view?usp=sharing <br>

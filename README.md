@@ -31,6 +31,7 @@ While I tried my best to make this program user-friendly, there were many limita
 ## If you're lazy...
 TL;DR: `Press batch_maker.bat`<br>
 The python file(wwpt.py) has to be clicked everytime you launch your game. But having to run this file can be tedious, so I made an automated batch maker(batch_maker.bat). What this does, is it will ask for the directory of your game's launcher, and the wwpt.py file's directory. Entering them will make a "launch_game_and_wwpt.bat" which runs both the launcher and the python script at the same time.<br>
+*So instead of pressing the launcher, from now on press this bat file.*<br>
 Be wary that you must enter the **FILE'S DIRECTORY**, not the folder's directory. For example, the directory to my python file would be: <br>
 `C:\\Users\\username\\Desktop\\GIT\\WWPT\\wwpt.py`<br>
 and NOT<br>

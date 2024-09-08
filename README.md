@@ -17,7 +17,9 @@ While I tried my best to make this program user-friendly, there were many limita
 1. Download the lastest release of WWPT
 2. Create an environment with Python==3.10.11, and install requirements.txt 
 ```pip install -r requirements.txt```
-3. Run `wwpt.py` whenever you play the game. If you think this is too tedious, take a look at the `If you're lazy` section below.
+3. Run `RUN.bat` whenever you play the game. If you think this is too tedious, take a look at the `If you're lazy` section below.<br>
+**Warning**<br>
+All batch files are NOT to be moved elsewhere. If you would like to move it, please make a shortcut file instead.
 
 ## Walkthrough
 1. Launch `RUN.bat`. A window will ask for your username. This one, I will be distributing one for each one of you that contacts me. It won't ask anymore if you've properly entered your username the first time.
@@ -26,7 +28,7 @@ While I tried my best to make this program user-friendly, there were many limita
 4. **Only screenshot the part where the plates are shown.**
 5. Click on the tray --> right click on WWPT --> go to settings --> press "generate"
 6. This will automaticall save your plates to the database.
-7. Return to your mobile, and refresh! All done!
+7. Return to your mobile, and refresh! All done!<br>
 
 ## If you're lazy...
 TL;DR: `Press batch_maker.bat`<br>

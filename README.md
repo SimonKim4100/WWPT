@@ -8,8 +8,16 @@ While I tried my best to make this program user-friendly, there were many limita
 3. **You do NOT need to press any of the Python scripts**
 
 ## Installation
-Download the `zip` files with versions, on the very right side of this Github screen.<br>
-Unzip it to a safe location.
+### If you don't have Python(=if you are not a coder)
+1. Download the `zip` files with versions, on the very right side of this Github screen. Unzip it to a safe location.
+2. Install Python-3.10.11 that I have included. **Make sure to check "add Python to PATH** in the very beginning of installation.
+3. Run `install.bat`.
+4. Run `wwpt.py` whenever you play the game. If you think this is too tedious, take a look at the `If you're lazy` section below.
+### If you are a coder
+1. Download the lastest release
+2. Create an environment with Python==3.10.11, and install requirements.txt 
+```pip install -r requirements.txt```
+3. Run `wwpt.py` whenever you play the game. If you think this is too tedious, take a look at the `If you're lazy` section below.
 
 ## Walkthrough
 1. Launch `RUN.bat`. A window will ask for your username. This one, I will be distributing one for each one of you that contacts me. It won't ask anymore if you've properly entered your username the first time.
@@ -22,9 +30,9 @@ Unzip it to a safe location.
 
 ## If you're lazy...
 TL;DR: `Press BATCHMAKER.bat`<br>
-The RUN.bat file has to be clicked everytime you launch your game. But having to run this file can be tedious, so I made an automated batch maker. What this does, is it will ask for the directory of your game's launcher, and the wwpt.py file's directory. Entering them will make a "launch_game_and_RUN.bat" which runs both the launcher and the python script at the same time.<br>
+The python file(wwpt.py) has to be clicked everytime you launch your game. But having to run this file can be tedious, so I made an automated batch maker. What this does, is it will ask for the directory of your game's launcher, and the wwpt.py file's directory. Entering them will make a "launch_game_and_wwpt.bat" which runs both the launcher and the python script at the same time.<br>
 Be wary that you must enter the **FILE'S DIRECTORY**, not the folder's directory. For example, the directory to my python file would be: <br>
-`C:\\Users\\username\\Desktop\\GIT\\WWPT\\RUN.bat`<br>
+`C:\\Users\\username\\Desktop\\GIT\\WWPT\\wwpt.py`<br>
 and NOT<br>
 `C:\\Users\\username\\Desktop\\GIT\\WWPT`<br>
 Ignore the double slash, feel free to use single.

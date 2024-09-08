@@ -10,7 +10,7 @@ While I tried my best to make this program user-friendly, there were many limita
 ## Installation
 ### If you don't have Python(=if you are not a coder)
 1. Download the `zip` files with versions, on the very right side of this Github screen. Unzip it to a safe location.
-2. Install Python-3.10.11 that I have included. **Make sure to check "add Python to PATH** in the very beginning of installation.
+2. Install Python-3.10.11 that I have included. **Make sure to check "add Python to PATH"** in the very beginning of installation.
 3. Run `install.bat`.
 4. Run `wwpt.py` whenever you play the game. If you think this is too tedious, take a look at the `If you're lazy` section below.
 ### If you are a coder

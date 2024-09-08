@@ -19,8 +19,8 @@ While I tried my best to make this program user-friendly, there were many limita
 ```pip install -r requirements.txt```
 3. Run `RUN.bat` whenever you play the game. If you think this is too tedious, take a look at the `If you're lazy` section below.<br>
 4. Coders may need to change batch files by adding something like:<br>
-`cd your_directory<br>
-conda activate your_env`
+`cd your_directory`<br>
+`conda activate your_env`
 <br>
 **Warning**<br>
 All batch files are NOT to be moved elsewhere. If you would like to move it, please make a shortcut file instead.

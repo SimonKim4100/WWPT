@@ -18,9 +18,9 @@ WWPT를 다운로드해 주셔서 감사합니다! <br>
 2. Python==3.10.11으로 env 만들어주시고, requirements.txt 설치
 ```pip install -r requirements.txt```
 3. 게임을 실행할 때마다 `RUN.bat`을 실행해주세요. 이 과정이 귀찮다고 생각되면 아래의 '게으르시다면...' 섹션을 참고하세요.
-4. 코딩러들은 배치파일 앞부분을 좀 변경해야 할 겁니다:
-`cd your_directory`
-`conda activate your_env`
+4. 코딩러들은 배치파일 앞부분을 좀 변경해야 할 겁니다:<br>
+`cd your_directory`<br>
+`conda activate your_env`<br>
 **경고**<br>
 모든 배치 파일은 다른 곳으로 옮길 수 없습니다. 이동하려면 대신 바로 가기 파일을 만들어 주세요.
 

@@ -44,7 +44,7 @@ and NOT<br>
 Ignore the double slash, feel free to use single.
 
 ## APK file
-https://drive.google.com/file/d/1K3sYktJogFG83XHWkSDR5ucGPRG4nT1F/view?usp=sharing <br>
+https://drive.google.com/file/d/1Jq4byWekpWzGP7RU30qs3QywwDogkJIa/view?usp=sharing <br>
 Don't worry, it's hand made and safe XD<br>
 <br>
 Original Repo: https://github.com/SimonKim4100/WWPTm

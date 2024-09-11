@@ -1,5 +1,5 @@
 # WWPT(Wuthering Waves Plate Tracker)
-- [한국어](README.kr.md)
+[한국어](README.kr.md)<br>
 Thank you for downloading WWPT! <br>
 While I tried my best to make this program user-friendly, there were many limitations. Thus, I will write this README file that guides you step by step through all the programs that are required.
 

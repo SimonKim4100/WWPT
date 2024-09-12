@@ -1,4 +1,5 @@
 # WWPT(Wuthering Waves Plate Tracker)
+[한국어](README.kr.md)<br>
 Thank you for downloading WWPT! <br>
 While I tried my best to make this program user-friendly, there were many limitations. Thus, I will write this README file that guides you step by step through all the programs that are required.
 
@@ -12,12 +13,12 @@ While I tried my best to make this program user-friendly, there were many limita
 1. Download the `zip` files with versions, on the very right side of this Github screen. Unzip it to a safe location.
 2. Install Python-3.10.11 that I have included. **Make sure to check "add Python to PATH"** in the very beginning of installation.
 3. Run `install.bat`.
-4. Run `wwpt.py` whenever you play the game. If you think this is too tedious, take a look at the `If you're lazy` section below.
+4. Run `RUN.bat` whenever you play the game. If you think this is too tedious, take a look at the `If you're lazy` section below.
 ### If you are a coder
 1. Download the lastest release of WWPT
 2. Create an environment with Python==3.10.11, and install requirements.txt 
 ```pip install -r requirements.txt```
-3. Run `RUN.bat` whenever you play the game. If you think this is too tedious, take a look at the `If you're lazy` section below.<br>
+3. Run `RUN.bat` whenever you play the game. If you think this is too tedious, take a look at the `If you're lazy` section below.
 4. Coders may need to change batch files by adding something like:<br>
 `cd your_directory`<br>
 `conda activate your_env`<br>
@@ -35,7 +36,7 @@ All batch files are NOT to be moved elsewhere. If you would like to move it, ple
 
 ## If you're lazy...
 TL;DR: `Press batch_maker.bat`<br>
-The python file(wwpt.py) has to be clicked everytime you launch your game. But having to run this file can be tedious, so I made an automated batch maker(batch_maker.bat). What this does, is it will ask for the directory of your game's launcher, and the wwpt.py file's directory. Entering them will make a "launch_game_and_wwpt.bat" which runs both the launcher and the python script at the same time.<br>
+The RUN.bat has to be clicked everytime you launch your game. But having to run this file can be tedious, so I made an automated batch maker(batch_maker.bat). What this does, is it will ask for the directory of your game's launcher, and the wwpt.py file's directory. Entering them will make a "launch_game_and_wwpt.bat" which runs both the launcher and the python script at the same time.<br>
 *So instead of pressing the launcher, from now on press this bat file.*<br>
 Be wary that you must enter the **FILE'S DIRECTORY**, not the folder's directory. For example, the directory to my python file would be: <br>
 `C:\\Users\\username\\Desktop\\GIT\\WWPT\\wwpt.py`<br>
@@ -44,7 +45,7 @@ and NOT<br>
 Ignore the double slash, feel free to use single.
 
 ## APK file
-https://drive.google.com/file/d/1K3sYktJogFG83XHWkSDR5ucGPRG4nT1F/view?usp=sharing <br>
+https://drive.google.com/file/d/1Jq4byWekpWzGP7RU30qs3QywwDogkJIa/view?usp=sharing <br>
 Don't worry, it's hand made and safe XD<br>
 <br>
 Original Repo: https://github.com/SimonKim4100/WWPTm

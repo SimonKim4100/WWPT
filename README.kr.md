@@ -28,7 +28,7 @@ WWPT를 다운로드해 주셔서 감사합니다! <br>
 배치 파일이 생성된 후에는 런처와 EXE를 옮길 수 없습니다. 혹시 옮길 일이 생기면 다시 생성해주세요.
 
 ## APK 파일(안드로이드)
-https://drive.google.com/file/d/1HmXdTHkf_IB59m7m6FFKJ0Y9cgcHLuAV/view?usp=sharing <br>
+https://drive.google.com/file/d/1SXnuuGo7KFGz0AXooYAiFaeJxlSths4F/view?usp=sharing <br>
 걱정 마셈 직접 손으로 만든거라 악성코드는 없음<br>
 <br>
 Original Repo: https://github.com/SimonKim4100/WWPTm

@@ -35,6 +35,6 @@ Don't worry, it's hand made and safe XD<br>
 Original Repo: https://github.com/SimonKim4100/WWPTm
 
 ## Others
-EXE build with Nuitka
-Scripts built with Python==3.10
+EXE build with Nuitka<br>
+Scripts built with Python==3.10<br>
 Username dataset is saved in registry, please contact me if you are concerned.

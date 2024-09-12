@@ -37,4 +37,4 @@ Original Repo: https://github.com/SimonKim4100/WWPTm
 ## Others
 EXE build with Nuitka<br>
 Scripts built with Python==3.10<br>
-Username dataset is saved in registry, please contact me if you are concerned.
+Username data is saved in registry, please contact me if you are concerned.

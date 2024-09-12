@@ -2,15 +2,15 @@ import os
 import sys
 import requests
 import datetime
-from paddleocr import PaddleOCR
-import cv2
 import pystray
 from pystray import MenuItem as item
 from PIL import Image, ImageGrab
 import tkinter as tk
-from tkinter import simpledialog, Tk, Button, messagebox
+from tkinter import simpledialog, Tk, Button, messagebox, Entry, Label
 import threading
 import json
+import winreg
+import time
 
 # Firebase Config (Replace with your own Firebase config)
 firebase_config = {
@@ -19,22 +19,53 @@ firebase_config = {
     "databaseURL": f"https://firestore.googleapis.com/v1/projects/wwpt-52e3c/databases/(default)/documents"
 }
 
-# Initialize the OCR model
-ocr = PaddleOCR(use_angle_cls=True, lang='en')  # 'lang' can be changed if needed
+# Normal Python execution version of get_resource_path
 
-# Define the path to the saved image
-image_path = "wwpt.png"  # This is the image to be saved from the clipboard
+# def get_resource_path(relative_path):
+#     """Get the absolute path to the resource during normal Python execution."""
+#     return os.path.join(os.path.abspath("."), relative_path)
 
-# Define the path to store the username
-username_file_path = "username.txt"
+# Uncomment the following get_resource_path for Nuitka or PyInstaller versions
+
+def get_resource_path(relative_path):
+    """Get the absolute path to the resource for PyInstaller or Nuitka execution."""
+    try:
+        # PyInstaller stores files in _MEIPASS during execution
+        base_path = sys._MEIPASS
+    except AttributeError:
+        # For normal Python execution
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
+
+# Registry-related functions
+def save_username_to_registry(username):
+    """Save the username to the Windows Registry."""
+    try:
+        reg_key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, r"Software\wwpt")
+        winreg.SetValueEx(reg_key, "Username", 0, winreg.REG_SZ, username)
+        winreg.CloseKey(reg_key)
+    except Exception as e:
+        print(f"Failed to save username to registry: {e}")
+
+def get_username_from_registry():
+    """Retrieve the username from the Windows Registry."""
+    try:
+        reg_key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, r"Software\wwpt", 0, winreg.KEY_READ)
+        username, _ = winreg.QueryValueEx(reg_key, "Username")
+        winreg.CloseKey(reg_key)
+        return username
+    except FileNotFoundError:
+        return None  # Key does not exist yet
+    except Exception as e:
+        print(f"Failed to retrieve username from registry: {e}")
+        return None
 
 def get_username():
-    """Function to get the username from a file or prompt the user if not available."""
-    if os.path.exists(username_file_path):
-        with open(username_file_path, 'r') as f:
-            return f.read().strip()
-    else:
-        return None
+    """Function to get the username from the registry and prompt the user if it's not set."""
+    username = get_username_from_registry()
+    if username is None:
+        return ask_for_username()  # Prompt for a new username if it's not in the registry
+    return username
 
 def ask_for_username():
     """Prompt the user for a username, check its existence in Firestore, and save it."""
@@ -52,9 +83,7 @@ def ask_for_username():
         if username:
             # Check if the username exists in Firestore
             if check_username_exists(username):
-                # Username exists, save it locally
-                with open(username_file_path, 'w') as f:
-                    f.write(username)
+                save_username_to_registry(username)  # Save the username to the registry
                 return username
             else:
                 messagebox.showerror("Error", "Username doesn't exist.")
@@ -67,73 +96,24 @@ def check_username_exists(username):
     response = requests.get(url)
 
     if response.status_code == 200:
-        # Check if the response contains any documents
         documents = response.json().get('documents')
-        if documents:  # If documents exist, the collection exists
-            return True
-        else:
-            return False
+        return bool(documents)  # Return True if documents exist, else False
     else:
         return False
 
-
 def edit_username():
     """Function to edit the username."""
-    root = Tk()
-    root.withdraw()  # Hide the main window
-    username = simpledialog.askstring("Input", "Enter your new username:", parent=root)
-    root.destroy()
-
+    username = ask_for_username()
     if username:
-        # Check if the username exists in Firestore
-        if check_username_exists(username):
-            # Username exists, save it locally
-            with open(username_file_path, 'w') as f:
-                f.write(username)
-        else:
-            messagebox.showerror("Error", "Username doesn't exist.")
-    else:
-        messagebox.showerror("Error", "Username cannot be empty.")
+        save_username_to_registry(username)
 
 def quit_program(icon, item):
     """Function to quit the application."""
     icon.stop()
     os._exit(0)  # Ensure the program exits
 
-def run_ocr():
-    """Function to perform OCR on the saved image and save results to Firestore."""
-    if not os.path.exists(image_path):
-        print(f"Error: The file at {image_path} does not exist.")
-    else:
-        # Load the image
-        image = cv2.imread(image_path)
-
-        # Check if the image was loaded successfully
-        if image is None:
-            print(f"Error: Unable to load image at {image_path}. Please check the file path and integrity.")
-        else:
-            # Use PaddleOCR to read text from the full image (no cropping)
-            result = ocr.ocr(image, cls=True)
-
-            # Extract the number in ---/--- format from the result
-            if result and result[0]:
-                detected_text = result[0][0][1][0]  # Extracting detected text
-                # Check if the text contains '/'
-                if '/' in detected_text:
-                    print(f"Detected 'plates' count: {detected_text}")
-
-                    # Get the username
-                    username = get_username()
-                    if username:
-                        # Save data to Firestore using REST API
-                        save_to_firestore(username, detected_text)
-                else:
-                    messagebox.showerror("Error", "No valid 'plates' count found in the expected format.")
-            else:
-                messagebox.showerror("Error", "No text detected.")
-
 def save_to_firestore(username, detected_text):
-    """Function to save OCR results to Firestore using REST API."""
+    """Function to save text results to Firestore using REST API."""
     current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     url = f"{firebase_config['databaseURL']}/{username}/save?key={firebase_config['apiKey']}"
 
@@ -155,16 +135,29 @@ def save_to_firestore(username, detected_text):
     else:
         messagebox.showerror("Error", f"Failed to save data to Firestore: {response.content}")
 
-def save_clipboard_image():
-    """Function to save the current clipboard image as wwpt.png."""
-    clipboard_image = ImageGrab.grabclipboard()
-
-    if isinstance(clipboard_image, Image.Image):
-        clipboard_image.save(image_path, "PNG")
-        print(f"Image saved from clipboard as '{image_path}'.")
-        run_ocr()  # Run OCR on the saved image
+def save_text_input(text, current_username_label, save_label):
+    """Function to handle saving the user input text to Firestore and display 'Saved'."""
+    username = get_username()
+    if username:
+        try:
+            number = int(text)  # Convert the input text to an integer
+            if 0 <= number <= 240:
+                save_to_firestore(username, str(number) + "/240")
+                # Update the current username label
+                current_username_label.config(text=f"Current User: {username}")
+                # Show "Saved" text for 2 seconds
+                save_label.config(text="Saved")
+                save_label.after(2000, lambda: save_label.config(text=""))
+            else:
+                messagebox.showerror("Error", "Input out of range! Please enter a number between 0 and 240.")
+        except ValueError:
+            messagebox.showerror("Error", "Invalid input! Please enter a valid integer.")
     else:
-        messagebox.showerror("Error", "No image found in the clipboard.")
+        messagebox.showerror("Error", "No username found. Please set a username.")
+
+def on_closing(settings_window):
+    """Function to handle window closing event."""
+    settings_window.destroy()
 
 def show_settings_menu():
     """Function to show the settings window with options."""
@@ -172,27 +165,52 @@ def show_settings_menu():
     settings_window.title("Settings Menu")
 
     # Set the window size (e.g., 300x200 pixels)
-    settings_window.geometry("300x100")  # Adjust width and height as needed
+    settings_window.geometry("300x220")  # Adjust width and height as needed
 
-    # Button to edit username
-    username_button = Button(settings_window, text="Edit Username", command=edit_username)
-    username_button.pack(pady=10)
+    # Bind the closing event to handle window close
+    settings_window.protocol("WM_DELETE_WINDOW", lambda: on_closing(settings_window))
 
-    # Button to generate image from clipboard and perform OCR
-    generate_button = Button(settings_window, text="Generate", command=save_clipboard_image)
-    generate_button.pack(pady=10)
+    # Display the current username at the top
+    current_username = get_username()
+    current_username_label = Label(settings_window, text=f"Current User: {current_username}")
+    current_username_label.pack(pady=10)
+
+    # Add a button to edit the username
+    edit_username_button = Button(settings_window, text="Edit Username", command=lambda: edit_username_and_update_label(current_username_label))
+    edit_username_button.pack(pady=5)
+
+    # Input text box for user input
+    input_label = tk.Label(settings_window, text="Enter plates:")
+    input_label.pack(pady=5)
+
+    input_text = Entry(settings_window, justify='center')
+    input_text.pack(pady=5)
+
+    # Save button and saved label
+    save_button = Button(settings_window, text="Save", command=lambda: save_text_input(input_text.get(), current_username_label, save_label))
+    save_button.pack(pady=5)
+
+    # "Saved" label that appears after saving
+    save_label = Label(settings_window, text="", fg="green")
+    save_label.pack()
 
     settings_window.mainloop()
 
+def edit_username_and_update_label(current_username_label):
+    """Function to edit the username and update the label with the new username."""
+    edit_username()
+    current_username = get_username()
+    current_username_label.config(text=f"Current User: {current_username}")
+
 def create_tray_icon():
     """Function to create the system tray icon."""
-    icon_image = Image.open("icon.png")  # Replace with a path to your tray icon image
+    icon_image = Image.open(get_resource_path("icon.png"))  # Replace with a path to your tray icon image
 
     menu = (
         item('Settings', lambda icon, item: show_settings_menu()),
         item('Quit', quit_program)
     )
-    
+
     icon = pystray.Icon("plate_detector", icon_image, "Plate Detector", menu)
     icon.run()
 
@@ -208,9 +226,5 @@ if __name__ == "__main__":
         tray_thread.join()  # Keep the main thread alive to run the tray icon
     else:
         # If no username, prompt and then show settings window
-        username = ask_for_username()
-        if username:
-            show_settings_menu()
-        else:
-            print("No username provided. Exiting.")
-            quit_program(None, None)
+        print("No username provided. Exiting.")
+        quit_program(None, None)

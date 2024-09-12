@@ -14,9 +14,7 @@ import time
 
 # Firebase Config (Replace with your own Firebase config)
 firebase_config = {
-    "apiKey": "AIzaSyCE_QYQA4JzcJEpVLo01lhFYbyLQZlPfHs",
-    "projectId": "wwpt-52e3c",
-    "databaseURL": f"https://firestore.googleapis.com/v1/projects/wwpt-52e3c/databases/(default)/documents"
+    # Your config #
 }
 
 # Normal Python execution version of get_resource_path

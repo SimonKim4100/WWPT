@@ -6,7 +6,7 @@ While I tried my best to make this program user-friendly, there were many limita
 ## Notice
 1. This program DOES NOT access or alter any game files.
 2. The database uses pseudo-authentication process, so please don't try to break through :)
-3. **Please download the releases and NOT the repository**
+3. **Please download the releases and NOT the repository**. The release files can be found in the very right side of this screen.
 
 ## Walkthrough
 1. Launch `wwpt.exe`. A window will ask for your username. This one, I will be distributing one for each one of you that contacts me. It won't ask anymore if you've properly entered your username the first time.

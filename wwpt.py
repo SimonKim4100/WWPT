@@ -14,7 +14,9 @@ import time
 
 # Firebase Config (Replace with your own Firebase config)
 firebase_config = {
-    # Your config #
+    "apiKey": "AIzaSyCE_QYQA4JzcJEpVLo01lhFYbyLQZlPfHs",
+    "projectId": "wwpt-52e3c",
+    "databaseURL": f"https://firestore.googleapis.com/v1/projects/wwpt-52e3c/databases/(default)/documents"
 }
 
 # Normal Python execution version of get_resource_path
@@ -26,11 +28,11 @@ firebase_config = {
 # Uncomment the following get_resource_path for Nuitka or PyInstaller versions
 
 def get_resource_path(relative_path):
-    """Get the absolute path to the resource for PyInstaller or Nuitka execution."""
-    try:
-        # PyInstaller stores files in _MEIPASS during execution
-        base_path = sys._MEIPASS
-    except AttributeError:
+    """Get the absolute path to the resource for Nuitka onefile or normal Python execution."""
+    if getattr(sys, 'frozen', False):
+        # If using Nuitka, files are bundled and extracted to the same directory as the executable
+        base_path = os.path.dirname(sys.executable)
+    else:
         # For normal Python execution
         base_path = os.path.abspath(".")
     return os.path.join(base_path, relative_path)

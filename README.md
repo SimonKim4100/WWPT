@@ -29,7 +29,7 @@ Ignore the double slash, feel free to use single.
 After creating the batch file, DO NOT move the EXE and launcher, or the directories will change.
 
 ## APK file
-https://drive.google.com/file/d/1nwUsyVQPzSmTQJ5aMiRHbR12fzgJh0Zs/view?usp=sharing <br>
+https://drive.google.com/file/d/194xSKdIEXHWDbp3ammzyCtfonitQerk2/view?usp=sharing <br>
 Don't worry, it's hand made and safe XD<br>
 <br>
 Original Repo: https://github.com/SimonKim4100/WWPTm
